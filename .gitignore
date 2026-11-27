@@ -1,0 +1,12 @@
+node_modules/
+dist/
+artifacts/
+coverage/
+.npm-cache/
+.ssh/
+.tmp/
+*.local
+*.tsbuildinfo
+.env
+.env.*
+.github-token

@@ -1,0 +1,31 @@
+{
+  "id": "yandex-music",
+  "name": "Яндекс Музыка",
+  "version": "1.0.0",
+  "api": 1,
+  "description": "Импорт плейлистов и «Мне нравится» из Яндекс Музыки — как импорт плейлистов Spotify, но для Яндекс Музыки.",
+  "repository": "https://github.com/ckpei7ka/aurral-yandex-music-plugin",
+  "uses": ["Yandex Music API (api.music.yandex.net)"],
+  "settings": [
+    {
+      "key": "token",
+      "label": "OAuth-токен Яндекс Музыки",
+      "type": "password",
+      "required": true,
+      "help": "Токен нужен для доступа к API. Как его получить — в README плагина. Можно вставить и всю ссылку из адресной строки после входа."
+    },
+    {
+      "key": "includeUnavailable",
+      "label": "Импортировать недоступные треки",
+      "type": "boolean",
+      "required": false,
+      "help": "По умолчанию треки, недоступные в вашем регионе, пропускаются. Включите, чтобы импортировать их названия и исполнителей."
+    }
+  ],
+  "importList": {
+    "label": "Яндекс Музыка",
+    "hosts": ["music.yandex.ru", "music.yandex.com", "music.yandex.kz", "music.yandex.by"],
+    "sync": true
+  },
+  "test": true
+}

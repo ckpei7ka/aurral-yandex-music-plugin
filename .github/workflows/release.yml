@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Test and publish the plugin archive
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check the plugin and its release archive
+        run: npm run check
+
+      - name: Verify that the tag matches the plugin version
+        run: node scripts/check-version.mjs "${{ github.ref_name }}"
+
+      - name: Publish the GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          files: artifacts/aurral-yandex-music-plugin.zip
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+
+      - name: Upload the release archive as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurral-yandex-music-plugin-${{ github.ref_name }}
+          path: artifacts/aurral-yandex-music-plugin.zip
+          if-no-files-found: error
